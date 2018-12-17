@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Psychic Game</title>
+</head>
+
+<body>
+    <center>
+        <div class="container">
+            <header>
+
+                <h1>Psychic Game</h1>
+                <img src="crystalball.gif" height="200" width="200">
+                <h2> Guess what letter I'm thinking of...</h2>
+
+            </header>
+
+            <br>
+
+
+            <div>
+                <div class="container">
+                    <h1 id="userGuess-text"></h1>
+                    <br>
+                    <p>Your Previous Guess</p>
+                </div>
+                <div class="container">
+                    <h1 id="computer"></h1>
+                    <br>
+                    <p>Computer's Guess</p>
+                </div>
+            </div>
+
+            <br>
+
+            <div id="scoreboard">
+                <p> Wins: <span id="wins">0</span></p>
+                <p> Guesses Left: <span id="guesses">10</span></p>
+                <p>Losses: <span id="losses">0</span></p>
+            </div>
+        </div>
+    </center>
+
+
+    <script type="text/javascript">
+
+        var wins = 0;
+        var losses = 0;
+        var guesses = 10;
+        var userGuess = document.onkeyup = function (event) {
+            userGuess.textContent = event.key;
+            userGuess = document.getElementById('userGuess-text');
+        }
+
+
+        var computerGuess = String.fromCharCode(
+            Math.floor(Math.random() * 26) + 97
+        ).toLowerCase();
+
+        console.log(computerGuess);
+
+
+
+        
+
+        function theCP() {
+            document.getElementById('computer').innerHTML = computerGuess;
+        }
+
+        function theGuesses() {
+            document.getElementById('guesses').innerHTML = guesses;
+        }
+
+        function theLosses() {
+            document.getElementById('losses').innerHTML = losses;
+        }
+
+
+        function theWins() {
+            document.getElementById('wins').innerHTML = wins;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+</body>
+
+</html>
