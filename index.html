@@ -38,9 +38,9 @@
             <br>
 
             <div id="scoreboard">
-                <p> Wins: <span id="wins">0</span></p>
-                <p> Guesses Left: <span id="guesses">10</span></p>
-                <p>Losses: <span id="losses">0</span></p>
+                <p> Wins: <span id="winsCount">0</span></p>
+                <p> Guesses Left: <span id="guessesCount">10</span></p>
+                <p>Losses: <span id="lossesCount">0</span></p>
             </div>
         </div>
     </center>
@@ -49,51 +49,84 @@
     <script type="text/javascript">
 
         var wins = 0;
+        //track the users wins when correct letter is guessed
         var losses = 0;
+        //track the users  losses after 0 guessesLeft
         var guesses = 10;
-        var userGuess = document.onkeyup = function (event) {
-            userGuess.textContent = event.key;
-            userGuess = document.getElementById('userGuess-text');
+        // How much guesses the users has left before a loss
+        var userGuesses = [];
+        //The array of user guesses that will become a string
+        var computerGuess = "";
+
+
+        roundStart();
+
+
+        document.onkeyup = function (event) {
+
+            if (event.keyCode >= 65 || event.keyCode >= 90) {
+
+                if (!userGuesses.includes(event.key)) {
+
+
+                    // var userGuess = String.fromCharCode(event.keyCode).toLowerCase();
+                    userGuesses.push(event.key);
+                    var userGuess = userGuesses.join(", ");
+                    document.getElementById('userGuess-text').innerHTML = userGuess;
+                    if (userGuess === computerGuess) {
+                        wins++;
+                        theWins();
+                        roundStart();
+                    }
+
+                    else if (userGuess !== computerGuess) {
+                        guesses--;
+                        theGuesses();
+                        if (guesses === 0) {
+                            losses++;
+                            theLosses();
+                            roundStart();
+                        };
+                    }
+                } else {
+                    alert(event.key + " is a Repeat Guess. Try Another Letter!");
+                }
+
+            }
+        }
+
+        function roundStart() {
+
+            computerGuess = String.fromCharCode(
+                Math.floor(Math.random() * 26) + 90
+            ).toLowerCase();
+
+            guesses = 10;
+            theGuesses();
+            userGuesses = [];
+
+            console.log(computerGuess);
         }
 
 
-        var computerGuess = String.fromCharCode(
-            Math.floor(Math.random() * 26) + 97
-        ).toLowerCase();
 
-        console.log(computerGuess);
-
-
-
-        
 
         function theCP() {
             document.getElementById('computer').innerHTML = computerGuess;
         }
 
         function theGuesses() {
-            document.getElementById('guesses').innerHTML = guesses;
+            document.getElementById('guessesCount').innerHTML = guesses;
         }
 
         function theLosses() {
-            document.getElementById('losses').innerHTML = losses;
+            document.getElementById('lossesCount').innerHTML = losses;
         }
 
 
         function theWins() {
-            document.getElementById('wins').innerHTML = wins;
+            document.getElementById('winsCount').innerHTML = wins;
         }
-
-
-
-
-
-
-
-
-
-
-
 
 
     </script>
